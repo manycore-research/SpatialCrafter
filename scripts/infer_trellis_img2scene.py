@@ -314,7 +314,7 @@ class TempImageTo3DPipeline:
         slat_sampler_params: dict,
         slat_normalization: dict = None,
         dav3_model: DepthAnything3 = None,
-        localdino_repo_path: str = "/path/to/experiments/dinov2",
+        localdino_repo_path: str = "facebookresearch/dinov2",
         device: torch.device = torch.device("cuda"),
     ):
         """ Single image to 3D pipeline for testing the pretrained Trellis models. 
@@ -351,7 +351,7 @@ class TempImageTo3DPipeline:
         self._init_image_cond_model(local_repo_path=localdino_repo_path)
         self.dav3_model = dav3_model
 
-    def _init_image_cond_model(self, local_repo_path: str = "/path/to/experiments/dinov2"):
+    def _init_image_cond_model(self, local_repo_path: str = "facebookresearch/dinov2"):
         """
         Initialize the image conditioning model.
         """
@@ -818,7 +818,7 @@ def build_pipeline_from_ckpt(
         slat_sampler=slat_sampler,
         slat_sampler_params=sampler_args_dict["slat_sampler"]["params"],
         slat_normalization=sampler_args_dict["slat_normalization"],
-        localdino_repo_path="/path/to/experiments/dinov2",
+        localdino_repo_path="/path/to/your/local/dinov2",
         device=torch.device("cuda"),
         dav3_model=dav3_model,
     )
