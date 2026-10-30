@@ -1,0 +1,138 @@
+NOTICE
+======
+
+SpatialCrafter: Single Image World Modeling with Generative 3D Proxies
+
+Copyright (c) 2026 The SpatialCrafter authors
+(HKUST Spatial Artificial Intelligence Lab; Manycore Tech Inc.; Alibaba Group;
+Jilin University)
+
+This product is licensed under the Apache License, Version 2.0. See the LICENSE
+file for the full license text.
+
+This product includes software developed by third parties. The components are
+listed below, together with the license notice as it appears in the source, or
+a pointer to the upstream project where the license is published. The original
+copyright notices are retained in the source files. Where a component's license
+differs from Apache-2.0, the terms of that component's own license apply to it.
+
+--------------------------------------------------------------------------------
+Included source code
+--------------------------------------------------------------------------------
+
+1. TRELLIS — Structured 3D Latents for Scalable and Versatile 3D Generation
+   Location: trellis/
+   Copyright (c) Microsoft Corporation
+   License: MIT
+   Source: https://github.com/microsoft/TRELLIS
+
+2. DiffSynth-Studio
+   Location: diffsynth/
+   Copyright the DiffSynth-Studio contributors (ModelScope)
+   License: Apache License, Version 2.0
+   Source: https://github.com/modelscope/DiffSynth-Studio
+
+3. Depth Anything 3
+   Location: depth_anything_3/
+   Copyright (c) 2025 ByteDance Ltd. and/or its affiliates
+   Source: https://github.com/ByteDance-Seed/depth-anything-3
+   See the upstream repository for the license terms.
+
+4. DINOv2
+   Location: data_engine/dinov2/
+   Copyright (c) Meta Platforms, Inc. and affiliates
+   License: Apache License, Version 2.0
+   Source: https://github.com/facebookresearch/dinov2
+
+5. FlexiCubes
+   Location: trellis/representations/mesh/flexicubes/
+   Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES
+   License: Apache License, Version 2.0 (per the header in flexicubes.py)
+   Source: https://github.com/nv-tlabs/FlexiCubes
+   Note: files under examples/ adapt functions from NVIDIA nvdiffrec
+   (https://github.com/NVlabs/nvdiffrec).
+
+6. vox2seq — Hilbert and Z-order curve utilities
+   Location: extensions/vox2seq/
+   Contains code derived from:
+   - Octree-based Sparse Convolutional Neural Networks (O-CNN),
+     Copyright (c) 2022 Peng-Shuai Wang, MIT License,
+     https://github.com/microsoft/O-CNN
+   - PrincetonLIPS/numpy-hilbert-curve,
+     https://github.com/PrincetonLIPS/numpy-hilbert-curve
+
+7. Dataset registry
+   Location: trellis/datasets/registry.py
+   Copyright (c) OpenMMLab. All rights reserved.
+   Derived from the MMEngine / MMCV registry pattern.
+
+8. Camera pose utilities
+   Location: diffsynth/models/wan_video_camera_controller.py
+   Source: https://github.com/hehao13/CameraCtrl
+   See the upstream repository for the license terms.
+
+9. PixArt-alpha — model blocks
+   Location: diffsynth/models/step1x_connector.py
+   Copyright PixArt-alpha authors
+   Source: https://github.com/PixArt-alpha/PixArt-alpha
+   See the upstream repository for the license terms.
+
+10. native-sparse-attention-triton — sparse attention kernels
+    Location: trellis/modules/sparse/attention/spatial_sparse_attention/ops/
+    Source: https://github.com/XunhaoLai/native-sparse-attention-triton
+    See the upstream repository for the license terms.
+
+11. Video metric models
+    Location: diffsynth/metrics/video/models/
+    - FVMD (PIPS2, motion extractor):
+      https://github.com/DSL-Lab/FVMD-frechet-video-motion-distance
+    - I3D weights: https://github.com/JunyaoHu/common_metrics_on_video_quality
+    - RAFT: https://github.com/princeton-vl/RAFT (BSD-3-Clause)
+    Several files are adapted from torchmetrics.image.FrechetInceptionDistance
+    and InceptionScore (Apache License, Version 2.0).
+
+--------------------------------------------------------------------------------
+Inria GRAPHDECO components — NON-COMMERCIAL USE ONLY
+--------------------------------------------------------------------------------
+
+The following files carry the Inria GRAPHDECO research group's license, which
+permits non-commercial, research and evaluation use only. They are NOT covered
+by this project's Apache-2.0 license, and redistribution of this repository for
+commercial purposes is restricted by their terms:
+
+  - trellis/renderers/gaussian_render.py
+  - trellis/representations/gaussian/general_utils.py
+  - extensions/vox2seq/setup.py
+
+  Copyright (C) 2023, Inria
+  GRAPHDECO research group, https://team.inria.fr/graphdeco
+  All rights reserved.
+  This software is free for non-commercial, research and evaluation use
+  under the terms of the LICENSE.md file.
+  For inquiries contact george.drettakis@inria.fr.
+
+  Original: https://github.com/graphdeco-inria/gaussian-splatting
+
+--------------------------------------------------------------------------------
+Dependencies installed at build time
+--------------------------------------------------------------------------------
+
+The following are fetched from upstream during installation rather than
+included in this repository, and remain under their own licenses:
+
+  - PyTorch, torchvision
+  - nvdiffrast: https://github.com/NVlabs/nvdiffrast
+  - diffoctreerast: https://github.com/JeffreyXiang/diffoctreerast
+  - diff-gaussian-rasterization, modified RaDe-GS build:
+    https://github.com/fangchuan/RaDe-GS
+  - utils3d: https://github.com/EasternJournalist/utils3d
+  - FlashAttention: https://github.com/Dao-AILab/flash-attention
+  - NVIDIA Kaolin, spconv, OpenAI CLIP
+
+Refer to each project for its license terms.
+
+--------------------------------------------------------------------------------
+
+Model checkpoints distributed separately, including the SpatialCrafter weights
+hosted on Hugging Face, are governed by the license terms published alongside
+them on their model card.

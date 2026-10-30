@@ -1,0 +1,113 @@
+{
+    "models": {
+        "denoiser": {
+            "name": "SLatFlowModel",
+            "args": {
+                "resolution": 64,
+                "in_channels": 8,
+                "out_channels": 8,
+                "model_channels": 1024,
+                "cond_channels": 1024,
+                "num_blocks": 24,
+                "num_heads": 16,
+                "mlp_ratio": 4,
+                "patch_size": 2,
+                "num_io_res_blocks": 2,
+                "io_block_channels": [
+                    128
+                ],
+                "pe_mode": "ape",
+                "qk_rms_norm": true,
+                "use_fp16": true
+            }
+        }
+    },
+    "dataset": {
+        "name": "ImageConditionedSLat",
+        "args": {
+            "latent_model": "slat_vae_enc_dec_gs_swin8_B_64l8_fp16_step0004000",
+            "min_aesthetic_score": 4.5,
+            "max_num_voxels": 150000,
+            "image_size": 518,
+            "normalization": {
+                "mean": [
+                    -1.3036162853240967,
+                    0.906632661819458,
+                    2.373685598373413,
+                    -0.4580664336681366,
+                    0.3458172678947449,
+                    -0.3778378367424011,
+                    -2.233727216720581,
+                    3.077630043029785
+                ],
+                "std": [
+                    2.876657485961914,
+                    2.233947992324829,
+                    1.8653422594070435,
+                    2.120612859725952,
+                    3.120755910873413,
+                    2.538193702697754,
+                    2.8822309970855713,
+                    2.9409987926483154
+                ]
+            },
+            "slat_dec_path": "/path/to/experiments/DiffSynth-Studio/pretrained_ckpts/sft_slat_vae_64",
+            "slat_dec_ckpt": "step0004000"
+        }
+    },
+    "trainer": {
+        "name": "ImageConditionedSparseFlowMatchingCFGTrainer",
+        "args": {
+            "max_steps": 1000000,
+            "batch_size_per_gpu": 8,
+            "batch_split": 1,
+            "optimizer": {
+                "name": "AdamW",
+                "args": {
+                    "lr": 0.0001,
+                    "weight_decay": 0.0
+                }
+            },
+            "ema_rate": [
+                0.9999
+            ],
+            "fp16_mode": "inflat_all",
+            "fp16_scale_growth": 0.001,
+            "grad_clip": {
+                "name": "AdaptiveGradClipper",
+                "args": {
+                    "max_norm": 1.0,
+                    "clip_percentile": 95
+                }
+            },
+            "i_log": 100,
+            "i_sample": 1000,
+            "i_save": 1000,
+            "p_uncond": 0.1,
+            "t_schedule": {
+                "name": "logitNormal",
+                "args": {
+                    "mean": 1.0,
+                    "std": 1.0
+                }
+            },
+            "sigma_min": 1e-5,
+            "image_cond_model_path": "/path/to/models/dinov2/dinov2_vitl14_reg4_pretrain.pth",
+            "finetune_ckpt": {
+                "denoiser": "/path/to/experiments/DiffSynth-Studio/pretrained_ckpts/sft_slat_dit_64/ckpts/denoiser_step0008000.pt"
+            },
+            "lora": {
+                "r": 16,
+                "lora_alpha": 32,
+                "lora_dropout": 0.0,
+                "bias": "none",
+                "target_modules": [
+                    "to_q",
+                    "to_kv",
+                    "to_out",
+                    "to_qkv"
+                ]
+            }
+        }
+    }
+}

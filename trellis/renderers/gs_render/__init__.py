@@ -1,0 +1,1 @@
+from trellis.renderers.gs_render.gs_renderer import GaussianRenderer

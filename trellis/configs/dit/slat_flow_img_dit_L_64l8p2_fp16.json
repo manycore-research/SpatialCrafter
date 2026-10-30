@@ -1,0 +1,108 @@
+{
+    "models": {
+        "denoiser": {
+            "name": "ElasticSLatFlowModel",
+            "args": {
+                "resolution": 64,
+                "in_channels": 8,
+                "out_channels": 8,
+                "model_channels": 1024,
+                "cond_channels": 1024,
+                "num_blocks": 24,
+                "num_heads": 16,
+                "mlp_ratio": 4,
+                "patch_size": 2,
+                "num_io_res_blocks": 2,
+                "io_block_channels": [
+                    128
+                ],
+                "pe_mode": "ape",
+                "qk_rms_norm": true,
+                "use_fp16": true
+            }
+        }
+    },
+    "dataset": {
+        "name": "ImageConditionedSLat",
+        "args": {
+            "latent_model": "slat_vae_enc_dec_gs_swin8_B_64l8_fp16_step0004000",
+            "min_aesthetic_score": 4.5,
+            "max_num_voxels": 100000,
+            "image_size": 518,
+            "normalization": {
+                "mean": [
+                    -1.955322504043579,
+                    -0.17805132269859314,
+                    0.07887908816337585,
+                    1.3940876722335815,
+                    -1.1487646102905273,
+                    -0.014329985715448856,
+                    -1.7741789817810059,
+                    1.7416635751724243
+                ],
+                "std": [
+                    2.8198282718658447,
+                    2.0864219665527344,
+                    2.232968330383301,
+                    2.486429452896118,
+                    3.008762836456299,
+                    2.6273839473724365,
+                    2.5930721759796143,
+                    2.6468937397003174
+                ]
+            },
+            "slat_dec_path": "/path/to/experiments/DiffSynth-Studio/experiments/20260205_095015_debug_trellis_slat_vae_64",
+            "slat_dec_ckpt": "step0004000"
+        }
+    },
+    "trainer": {
+        "name": "ImageConditionedSparseFlowMatchingCFGTrainer",
+        "args": {
+            "max_steps": 1000000,
+            "batch_size_per_gpu": 8,
+            "batch_split": 1,
+            "optimizer": {
+                "name": "AdamW",
+                "args": {
+                    "lr": 0.0001,
+                    "weight_decay": 0.0
+                }
+            },
+            "ema_rate": [
+                0.9999
+            ],
+            "fp16_mode": "inflat_all",
+            "fp16_scale_growth": 0.001,
+            "elastic": {
+                "name": "LinearMemoryController",
+                "args": {
+                    "target_ratio": 0.75,
+                    "max_mem_ratio_start": 0.5
+                }
+            },
+            "grad_clip": {
+                "name": "AdaptiveGradClipper",
+                "args": {
+                    "max_norm": 1.0,
+                    "clip_percentile": 95
+                }
+            },
+            "i_log": 100,
+            "i_sample": 1000,
+            "i_save": 1000,
+            "p_uncond": 0.1,
+            "t_schedule": {
+                "name": "logitNormal",
+                "args": {
+                    "mean": 1.0,
+                    "std": 1.0
+                }
+            },
+            "sigma_min": 1e-5,
+            "image_cond_model_path": "/path/to/models/dinov2/dinov2_vitl14_reg4_pretrain.pth",
+            "finetune_ckpt": {
+                "denoiser": "/path/to/models/TRELLIS/TRELLIS-image-large/ckpts/slat_flow_img_dit_L_64l8p2_fp16.ckpt"
+            }
+        }
+    }
+}

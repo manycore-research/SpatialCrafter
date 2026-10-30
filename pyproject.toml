@@ -1,0 +1,101 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diffsynth"
+version = "2.0.1"
+description = "Enjoy the magic of Diffusion models!"
+authors = [{name = "ModelScope Team"}]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10.1"
+# NOTE: torch / torchvision / xformers should be installed from the cu124 index, and
+# nvdiffrast / diffoctreerast / diff-gaussian-rasterization import torch in setup.py, so build isolation must be disabled:
+#   TORCH_CUDA_ARCH_LIST="9.0" pip install --no-build-isolation -e . \
+#       --extra-index-url https://download.pytorch.org/whl/cu124
+# vox2seq is still built from local files, see Dockerfile.
+dependencies = [
+    # PyTorch stack (pinned, xformers 0.0.28.post3 requires torch 2.5.1)
+    "torch==2.5.1",
+    "torchvision==0.20.1",
+    "xformers==0.0.28.post3",
+    # prebuilt wheels for torch 2.5 + cu124 + cp310
+    "kaolin @ https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.5.0_cu124/kaolin-0.17.0-cp310-cp310-linux_x86_64.whl",
+    "flash-attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.0.post2/flash_attn-2.8.0.post2+cu12torch2.5cxx11abiFALSE-cp310-cp310-linux_x86_64.whl",
+    # built from source (submodules are fetched recursively by pip)
+    "utils3d @ git+https://github.com/EasternJournalist/utils3d.git@9a4eb15e4021b67b12c460c7057d642626897ec8",
+    "nvdiffrast @ git+https://github.com/NVlabs/nvdiffrast.git",
+    "diffoctreerast @ git+https://github.com/JeffreyXiang/diffoctreerast.git",
+    # modified RaDe-GS rasterizer
+    "diff-gaussian-rasterization @ git+https://github.com/fangchuan/RaDe-GS.git#subdirectory=submodules/diff-gaussian-rasterization",
+    # HF ecosystem (transformers 5.x requires torch>=2.6)
+    "transformers>=4.46.0,<5.0.0",
+    "accelerate>=1.0.0,<2.0.0",
+    "peft>=0.13.0,<0.18.0",
+    "datasets",
+    "safetensors",
+    "modelscope",
+    "qwen-vl-utils",
+    "sentencepiece",
+    "protobuf",
+    "ftfy",
+    "einops",
+    # numerics / io (opencv 4.8 is built against numpy 1.x)
+    "numpy<2.0.0",
+    "scipy",
+    "pandas",
+    "pillow",
+    "imageio",
+    "imageio[ffmpeg]",
+    "opencv-contrib-python==4.8.0.74",
+    "pyexr",
+    # 3D
+    "trimesh",
+    "open3d",
+    "xatlas",
+    "pyvista",
+    "pymeshfix",
+    "igraph",
+    "spconv-cu124",
+    "shapely",
+    # metrics
+    "lpips",
+    "torchmetrics[image]==0.11.4",
+    "openai-clip",
+    "onnxruntime",
+    # misc
+    "ninja",
+    "tqdm",
+    "easydict",
+    "loguru",
+    "colorama",
+    "gradio",
+    "swanlab[dashboard]",
+    "agentscope",
+    "nvitop",
+    "nvidia-ml-py",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools.packages.find]
+where = ["./"]
+include = ["diffsynth", "diffsynth.*"]
+
+[project.optional-dependencies]
+npu_aarch64 = [
+    "torch==2.7.1",
+    "torch-npu==2.7.1",
+    "torchvision==0.22.1"
+]
+npu = [
+    "torch==2.7.1+cpu",
+    "torch-npu==2.7.1",
+    "torchvision==0.22.1+cpu"
+]
+
+[tool.setuptools]
+include-package-data = true

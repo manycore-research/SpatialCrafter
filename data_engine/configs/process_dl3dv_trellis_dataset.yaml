@@ -1,0 +1,39 @@
+dataset_rootpath: /path/to/dataset/DL3DV-10K/960p/process_dl3dv_traindata/
+split_filepath: /path/to/dataset/DL3DV-10K/960p/process_dl3dv_traindata/dataset_stats.csv
+dinov2_ckpt_file: /path/to/models/dinov2/dinov2_vitl14_reg4_pretrain.pth
+voxel_resolution: 64
+
+owner: <your_name>
+task_script: data_engine/dl3dv/preprocess_trellis_data.py
+task_name: dl3dv-trellis-dataprocess
+resources:
+  gpus: 1
+  cpu: 22
+  memory: 100Gi
+
+seed: 0
+
+# only useful when you use K8S system
+env:
+  image: <your_docker_image>
+  sync_mode: git
+  data_dir: <your_nas_path:your_nas_path>
+  data_high_dir: <your_nas_path:your_nas_path>
+  sync_source: <git repo url>
+  sync_branch: main
+  cpu_size: 112
+  selector: <selector>
+
+parallel:
+  jobs: 16
+  task_id: 0
+  exclude:
+  include:
+  workers: 12
+
+
+
+output:
+  path: /path/to/dataset/DL3DV-10K/960p/process_dl3dv_trellis_data/
+  format: txt
+  overwrite: true

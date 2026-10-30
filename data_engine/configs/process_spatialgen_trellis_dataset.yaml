@@ -1,0 +1,38 @@
+dataset_rootpath: /path/to/dataset/SpatialGen/processed_spatial_video_data
+split_filepath: /path/to/dataset/SpatialGen/processed_spatial_video_data/dataset_stats.csv
+dinov2_ckpt_file: /path/to/models/dinov2/dinov2_vitl14_reg4_pretrain.pth
+voxel_resolution: 64
+
+owner: <your_name>
+task_script: data_engine/spatial_video/preprocess_trellis_data.py
+task_name: trellis-dataprocess
+resources:
+  gpus: 1
+  cpu: 20
+  memory: 120Gi
+
+seed: 0
+
+# only useful when you use K8S system
+env:
+  image: <your_docker_image>
+  sync_mode: git
+  data_dir: <your_nas_path:your_nas_path>
+  data_high_dir: <your_nas_path:your_nas_path>
+  sync_source: <git repo url>
+  sync_branch: main
+  cpu_size: 112
+  selector: <selector>
+
+parallel:
+  jobs: 16
+  task_id: 0
+  exclude:
+  include:
+  workers: 12
+
+
+output:
+  path: /path/to/dataset/SpatialGen/processed_trellis_data/
+  format: txt
+  overwrite: true

@@ -1,0 +1,1 @@
+from trellis.representations.gaussian.gaussian_model import Gaussian
