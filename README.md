@@ -6,7 +6,7 @@
     src="https://img.shields.io/badge/🌐%20Project-SpatialCrafter-ffc107?color=42a5f5&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
     <a href="https://arxiv.org/abs/2608.27073" target="_blank" style="margin: 2px;"><img alt="arXiv"
     src="https://img.shields.io/badge/arXiv-SpatialCrafter-b31b1b?logo=arxiv&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
-    <a href="https://github.com/fangchuan/SpatialCrafter" target="_blank" style="margin: 2px;"><img alt="GitHub"
+    <a href="https://github.com/manycore-research/SpatialCrafter" target="_blank" style="margin: 2px;"><img alt="GitHub"
     src="https://img.shields.io/badge/GitHub-SpatialCrafter-24292e?logo=github&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
     <a href="https://huggingface.co/manycore-research/SpatialCrafter" target="_blank" style="margin: 2px;"><img alt="Hugging Face"
     src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-SpatialCrafter-ffc107?color=ffc107&logoColor=white" style="display: inline-block; vertical-align: middle;"/></a>
